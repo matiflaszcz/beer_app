@@ -20,6 +20,6 @@ for  element in range(24):
        find_beers+=1
        print(req.json()[element]["name"])
     elif element==23 and find_beers==0:
-       print("I don't have this food on my list, try anther dish")    
+       print("I don't have this food on my list, try anther")    
 
 print("\n Bon appetit!")
