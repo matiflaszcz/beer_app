@@ -1,14 +1,27 @@
 
 import requests
 import argparse
+import whisper
+
+from pathlib import Path
 
 req = requests.get('https://api.punkapi.com/v2/beers')
 
 parser = argparse.ArgumentParser()
-parser.add_argument("dish",type=str,help="Give me the name of the food ")
+group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument('--dish', type=str)
+group.add_argument('--audio_file', type=Path)
+
+
+# parser.add_argument("dish",type=str,help="Give me the name of the food ")
 args = parser.parse_args()
 
 print("Beers preffered for your dish are:\n")
+
+if not args.dish:
+   model = whisper.load_model("base")
+   result = model.transcribe(str(args.audio_file))
+   args.dish = result["text"]
 
 find_beers=0
 for  element in range(24):
